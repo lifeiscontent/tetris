@@ -1,21 +1,15 @@
-const initialState = {
-  width: 200,
-  height: 400,
-  cellSize: 20,
-  gameState: 'LOADING',
-  matrix: []
-};
+import { Game } from '../records';
 
-export default (state = initialState, action) => {
+export default (state = new Game(), action) => {
   switch (action.type) {
     case 'SET_GAME_STATE':
-      return { ...state, gameState: action.gameState };
+      return state.set('gameState', action.gameState);
     case 'SET_GAME_MATRIX':
-      return { ...state, matrix: action.matrix };
+      return state.set('matrix', action.matrix);
     case 'RESET_GAME':
-      return initialState;
+      return new Game();
     case 'PAUSE_GAME':
-      return { ...state, gameState: 'PAUSED' };
+      return state.set('gameState', 'PAUSED');
     default:
       return state;
   }

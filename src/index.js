@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import App from './App';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
-import { startGame } from './actionCreators';
+import { movePlayerDown, startGame } from './actions';
 import './index.css';
 
 registerServiceWorker();
@@ -24,7 +24,7 @@ const loop = endTime => {
   let deltaTime = endTime - startTime;
   dropCounter += deltaTime;
   if (dropCounter > dropInterval) {
-    store.dispatch({ type: 'MOVE_PLAYER_DOWN' });
+    store.dispatch(movePlayerDown());
     dropCounter = 0;
   }
 
