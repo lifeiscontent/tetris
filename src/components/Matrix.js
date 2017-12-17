@@ -23,6 +23,8 @@ const Matrix = ({ matrix, position, ...props }) => (
             fill={colors[value]}
             width={1}
             height={1}
+            stroke="black"
+            strokeWidth={0.1}
           />
         ))}
       </g>

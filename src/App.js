@@ -3,7 +3,16 @@ import { connect } from 'react-redux';
 import './App.css';
 import PlayerMatrix from './containers/PlayerMatrix';
 import GameMatrix from './containers/GameMatrix';
-import { movePlayerDown, movePlayerLeft, movePlayerRight } from './actions';
+import {
+  movePlayerDown,
+  movePlayerLeft,
+  movePlayerRight,
+  startGame
+} from './actions';
+
+let startTime = 0;
+let dropCounter = 0;
+const dropInterval = 1000;
 
 class App extends Component {
   constructor(props) {
@@ -12,6 +21,8 @@ class App extends Component {
   }
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown, false);
+    this.props.startGame(this.props.width, this.props.height);
+    this.loop(0);
   }
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown, false);
@@ -28,6 +39,18 @@ class App extends Component {
       </svg>
     );
   }
+  loop = endTime => {
+    let deltaTime = endTime - startTime;
+    dropCounter += deltaTime;
+    if (dropCounter > dropInterval) {
+      this.props.movePlayerDown();
+      dropCounter = 0;
+    }
+
+    startTime = endTime;
+
+    requestAnimationFrame(this.loop);
+  };
   handleKeyDown(event) {
     switch (event.key) {
       case 'ArrowRight':
@@ -51,5 +74,6 @@ const mapStateToProps = ({ game: { viewBox, width, height } }) => ({
 export default connect(mapStateToProps, {
   movePlayerDown,
   movePlayerLeft,
-  movePlayerRight
+  movePlayerRight,
+  startGame
 })(App);

@@ -4,7 +4,8 @@ export const Position = Record({ x: 0, y: 0 });
 
 export const Player = Record({
   matrix: List(),
-  position: Position()
+  position: Position(),
+  score: 0
 });
 
 export const Game = Record({

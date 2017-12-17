@@ -1,18 +1,18 @@
-import { createRandomPiece, createMatrix } from '../records';
+import { batchActions } from 'redux-batch-enhancer';
 
-export const setGameState = gameState => ({
-  type: 'SET_GAME_STATE',
+export const updateGameState = gameState => ({
+  type: 'UPDATE_GAME_STATE',
   gameState
 });
 
 export const setPlayerMatrix = () => ({
-  type: 'SET_PLAYER_MATRIX',
-  matrix: createRandomPiece()
+  type: 'SET_PLAYER_MATRIX'
 });
 
-export const setGameMatrix = (width, height) => ({
-  type: 'SET_GAME_MATRIX',
-  matrix: createMatrix(width, height)
+export const createGameMatrix = (width, height) => ({
+  type: 'CREATE_GAME_MATRIX',
+  width,
+  height
 });
 
 export const movePlayerDown = () => ({
@@ -27,9 +27,9 @@ export const movePlayerRight = () => ({
   type: 'MOVE_PLAYER_RIGHT'
 });
 
-export const startGame = () => (dispatch, getState) => {
-  const { game } = getState();
-  dispatch(setPlayerMatrix());
-  dispatch(setGameMatrix(game.width, game.height));
-  dispatch(setGameState('PLAYING'));
-};
+export const startGame = (width, height) =>
+  batchActions([
+    setPlayerMatrix(),
+    createGameMatrix(width, height),
+    updateGameState('PLAYING')
+  ]);

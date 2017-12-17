@@ -1,13 +1,11 @@
-import { Player } from '../records';
+import { Player, createRandomPiece } from '../records';
 
 export default (state = new Player(), action) => {
   switch (action.type) {
     case 'SET_PLAYER_MATRIX':
-      return state.set('matrix', action.matrix);
+      return state.set('matrix', createRandomPiece());
     case 'ROTATE_PLAYER_PIECE':
       return state;
-    case 'SET_PLAYER_POS':
-      return state.set('position', action.position);
     case 'MOVE_PLAYER_DOWN':
       return state.updateIn(['position', 'y'], y => y + 1);
     case 'MOVE_PLAYER_LEFT':
