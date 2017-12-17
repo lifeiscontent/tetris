@@ -1,4 +1,14 @@
-import { Game, createMatrix } from '../records';
+import { List } from 'immutable';
+import { Game } from '../records';
+
+export const createMatrix = (width, height) =>
+  List()
+    .setSize(height)
+    .map(() =>
+      List()
+        .setSize(width)
+        .map(() => 0)
+    );
 
 export default (state = new Game(), action) => {
   switch (action.type) {
